@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cursos</title>
+</head>
+<body>
+
+    <a href="/">Voltar para a página inicial</a>
+
+    <h1 style="text-align: center;">Cadastro de Cursos</h1>
+    <form th:action="@{/cursos/salvar}" th:object="${curso}" method="post">
+
+        <input type="hidden" th:field="*{idCurso}" />
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nomeCurso}" />
+        <br />
+
+        <label for="periodo">Período:</label>
+        <input type="text" id="periodo" th:field="*{periodoCurso}" />
+        <br />
+
+        <label for="cargaHoraria">Carga Horária:</label>
+        <input type="number" id="cargaHoraria" th:field="*{cargahorariaCurso}" />
+        <br />
+
+        <button type="submit">Salvar</button>
+    </form>
+
+</body>
+</html>
