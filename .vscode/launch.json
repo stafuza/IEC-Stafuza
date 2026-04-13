@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "type": "java",
+        "name": "FatecadsApplication",
+        "request": "launch",
+        "mainClass": "br.com.fatecads.fatecads.FatecadsApplication",
+        "projectName": ""
+    },
+    {
+        "type": "java",
+        "name": "Run FatecadsApplication (Maven Project)",
+        "request": "launch",
+        "mainClass": "br.com.fatecads.fatecads.FatecadsApplication",
+        "projectName": "fatecads",
+        "cwd": "${workspaceFolder}/FatecAds"
+    }
+]
+}
