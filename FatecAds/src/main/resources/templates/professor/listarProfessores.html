@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Professores</title>
+</head>
+
+<body>
+
+    <a href="/">Voltar para a página inicial</a>
+
+    <h1 style="text-align: center;">Listagem de Professores</h1>
+    <h3 style="text-align: center;">
+        <a href="/professores/criar">Criar Novo Professor</a>
+    </h3>
+
+    <table align="center" border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Graduação</th>
+            <th>RM</th>
+            <th colspan="2">Ações</th>
+        </tr>
+        <tr th:each="professor : ${professores}">
+            <td th:text="${professor.nomeProfessor}">*</td>
+            <td th:text="${professor.telefoneProfessor}">*</td>
+            <td th:text="${professor.graduacaoProfessor}">*</td>
+            <td th:text="${professor.rmProfessor}">*</td>
+            <td>
+                <a th:href="@{/professores/editar/{id}(id=${professor.idProfessor})}">Editar</a>
+                <a th:href="@{/professores/excluir/{id}(id=${professor.idProfessor})}">Excluir</a>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
