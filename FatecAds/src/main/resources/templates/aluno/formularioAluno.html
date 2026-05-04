@@ -4,42 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Alunos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
-<body>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/">Voltar para a pagina inicial</a>
 
-    <a href="/">Voltar para a página inicial</a>
+        <header class="page-header">
+            <div>
+                <h1>Cadastro de Alunos</h1>
+                <p class="subtitle">Preencha os dados com cuidado.</p>
+            </div>
+        </header>
 
-    <h1 style="text-align: center;">Cadastro de Alunos</h1>
-    <form th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
+        <section class="card">
+            <form class="form-grid" th:action="@{/alunos/salvar}" th:object="${aluno}" method="post">
+                <input type="hidden" th:field="*{idAluno}" />
 
-        <input type="hidden" th:field="*{idAluno}" />
+                <div class="field">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" th:field="*{nomeAluno}" />
+                </div>
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nomeAluno}" />
-        <br />
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{emailAluno}" />
+                </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{emailAluno}" />
-        <br />
+                <div class="field">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" id="telefone" th:field="*{telefoneAluno}" />
+                </div>
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" th:field="*{telefoneAluno}" />
-        <br />
+                <div class="field">
+                    <label for="endereco">Endereco</label>
+                    <input type="text" id="endereco" th:field="*{enderecoAluno}" />
+                </div>
 
-        <label for="endereco">Endereço:</label>
-        <input type="text" id="endereco" th:field="*{enderecoAluno}" />
-        <br />
+                <div class="field">
+                    <label for="CPF">CPF</label>
+                    <input type="text" id="CPF" th:field="*{cpfAluno}" />
+                </div>
 
-        <label for="CPF">CPF:</label>
-        <input type="text" id="CPF" th:field="*{cpfAluno}" />
-        <br />
+                <div class="field">
+                    <label for="raAluno">RA</label>
+                    <input type="text" id="raAluno" th:field="*{raAluno}" />
+                </div>
 
-        <label for="raAluno">RA:</label>
-        <input type="text" id="raAluno" th:field="*{raAluno}" />
-        <br />
+                <div class="field">
+                    <label for="curso">Curso</label>
+                    <select id="curso" th:field="*{curso}">
+                        <option value="" disabled selected>Selecione um curso</option>
+                        <option th:each="curso : ${cursos}"
+                                th:text="${curso.nomeCurso}"
+                                th:value="${curso.idCurso}">
+                        </option>
+                    </select>
+                </div>
 
-        <button type="submit">Salvar</button>
-    </form>
-
+                <div class="actions">
+                    <button class="btn" type="submit">Salvar</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

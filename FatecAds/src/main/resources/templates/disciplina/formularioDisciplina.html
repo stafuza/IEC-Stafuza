@@ -4,30 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Disciplinas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
-<body>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/">Voltar para a pagina inicial</a>
 
-    <a href="/">Voltar para a página inicial</a>
+        <header class="page-header">
+            <div>
+                <h1>Cadastro de Disciplinas</h1>
+                <p class="subtitle">Conecte conhecimento, curso e professor.</p>
+            </div>
+        </header>
 
-    <h1 style="text-align: center;">Cadastro de Disciplinas</h1>
-    <form th:action="@{/disciplinas/salvar}" th:object="${disciplina}" method="post">
+        <section class="card">
+            <form class="form-grid" th:action="@{/disciplinas/salvar}" th:object="${disciplina}" method="post">
+                <input type="hidden" th:field="*{idDisciplina}" />
 
-        <input type="hidden" th:field="*{idDisciplina}" />
+                <div class="field">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" th:field="*{nomeDisciplina}" />
+                </div>
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nomeDisciplina}" />
-        <br />
+                <div class="field">
+                    <label for="sigla">Sigla</label>
+                    <input type="text" id="sigla" th:field="*{siglaDisciplina}" />
+                </div>
 
-        <label for="sigla">Sigla:</label>
-        <input type="text" id="sigla" th:field="*{siglaDisciplina}" />
-        <br />
+                <div class="field">
+                    <label for="cargahoraria">Carga Horaria</label>
+                    <input type="number" id="cargahoraria" th:field="*{cargahorariaDisciplina}" />
+                </div>
 
-        <label for="cargahoraria">Carga Horária:</label>
-        <input type="number" id="cargahoraria" th:field="*{cargahorariaDisciplina}" />
-        <br />
+                <div class="field">
+                    <label for="curso">Curso</label>
+                    <select id="curso" th:field="*{curso}">
+                        <option value="" disabled selected>Selecione um curso</option>
+                        <option th:each="curso : ${cursos}"
+                                th:text="${curso.nomeCurso}"
+                                th:value="${curso.idCurso}">
+                        </option>
+                    </select>
+                </div>
 
-        <button type="submit">Salvar</button>
-    </form>
+                <div class="field">
+                    <label for="professor">Professor</label>
+                    <select id="professor" th:field="*{professor}">
+                        <option value="" disabled selected>Selecione um professor</option>
+                        <option th:each="professor : ${professores}"
+                                th:text="${professor.nomeProfessor}"
+                                th:value="${professor.idProfessor}">
+                        </option>
+                    </select>
+                </div>
 
+                <div class="actions">
+                    <button class="btn" type="submit">Salvar</button>
+                </div>
+            </form>
+        </section>
+    </main>
 </body>
 </html>
