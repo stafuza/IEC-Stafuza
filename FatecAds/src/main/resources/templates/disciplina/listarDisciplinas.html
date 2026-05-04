@@ -5,35 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Disciplinas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
 
-<body>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/">Voltar para a pagina inicial</a>
 
-    <a href="/">Voltar para a página inicial</a>
+        <header class="page-header">
+            <div>
+                <h1>Listagem de Disciplinas</h1>
+                <p class="subtitle">A malha completa de cursos e docentes.</p>
+            </div>
+            <a class="primary-link" href="/disciplinas/criar">Criar Nova Disciplina</a>
+        </header>
 
-    <h1 style="text-align: center;">Listagem de Disciplinas</h1>
-    <h3 style="text-align: center;">
-        <a href="/disciplinas/criar">Criar Nova Disciplina</a>
-    </h3>
-
-    <table align="center" border="1">
+        <section class="card">
+            <table class="data-table">
         <tr>
             <th>Nome</th>
             <th>Sigla</th>
             <th>Carga Horária</th>
+            <th>Curso</th>
+            <th>Professor</th>
             <th colspan="2">Ações</th>
         </tr>
         <tr th:each="disciplina : ${disciplinas}">
             <td th:text="${disciplina.nomeDisciplina}">*</td>
             <td th:text="${disciplina.siglaDisciplina}">*</td>
             <td th:text="${disciplina.cargahorariaDisciplina}">*</td>
-            <td>
+            <td th:text="${disciplina.curso.nomeCurso}">*</td>
+            <td th:text="${disciplina.professor.nomeProfessor}">*</td>
+            <td class="action-links">
                 <a th:href="@{/disciplinas/editar/{id}(id=${disciplina.idDisciplina})}">Editar</a>
                 <a th:href="@{/disciplinas/excluir/{id}(id=${disciplina.idDisciplina})}">Excluir</a>
             </td>
         </tr>
-    </table>
-
+            </table>
+        </section>
+    </main>
 </body>
 
 </html>

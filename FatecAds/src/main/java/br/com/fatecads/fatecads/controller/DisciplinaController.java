@@ -1,7 +1,10 @@
 package br.com.fatecads.fatecads.controller;
 
 import br.com.fatecads.fatecads.entity.Disciplina;
+import br.com.fatecads.fatecads.service.CursoService;
 import br.com.fatecads.fatecads.service.DisciplinaService;
+import br.com.fatecads.fatecads.service.ProfessorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,14 @@ public class DisciplinaController {
     // Injeção de dependência da service de disciplinas
     @Autowired
     private DisciplinaService disciplinaService;
+
+    // Injeção de dependência da service de cursos
+    @Autowired
+    private CursoService cursoService;
+
+    // Injeção de dependência da service de professores
+    @Autowired
+    private ProfessorService professorService;
 
     // Método para salvar uma nova disciplina
     @PostMapping("/salvar")
@@ -37,6 +48,8 @@ public class DisciplinaController {
     @GetMapping("/criar")
     public String criarForm(Model model) {
         model.addAttribute("disciplina", new Disciplina());
+        model.addAttribute("cursos", cursoService.findAll());   
+        model.addAttribute("professores", professorService.findAll());
         return "disciplina/formularioDisciplina";
     }
 
@@ -52,6 +65,8 @@ public class DisciplinaController {
     public String editarForm(@PathVariable Integer id, Model model) {
         Disciplina disciplina = disciplinaService.findById(id);
         model.addAttribute("disciplina", disciplina);
+        model.addAttribute("cursos", cursoService.findAll());
+        model.addAttribute("professores", professorService.findAll());
         return "disciplina/formularioDisciplina";
     }
 }

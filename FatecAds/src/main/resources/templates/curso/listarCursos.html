@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
 
-<body>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/">Voltar para a pagina inicial</a>
 
-    <a href="/">Voltar para a página inicial</a>
+        <header class="page-header">
+            <div>
+                <h1>Listagem de Cursos</h1>
+                <p class="subtitle">Panorama rapido do catalogo academico.</p>
+            </div>
+            <a class="primary-link" href="/cursos/criar">Criar Novo Curso</a>
+        </header>
 
-    <h1 style="text-align: center;">Listagem de Cursos</h1>
-    <h3 style="text-align: center;">
-        <a href="/cursos/criar">Criar Novo Curso</a>
-    </h3>
-
-    <table align="center" border="1">
+        <section class="card">
+            <table class="data-table">
         <tr>
             <th>Nome</th>
             <th>Período</th>
@@ -27,13 +35,14 @@
             <td th:text="${curso.nomeCurso}">*</td>
             <td th:text="${curso.periodoCurso}">*</td>
             <td th:text="${curso.cargahorariaCurso}">*</td>
-            <td>
+            <td class="action-links">
                 <a th:href="@{/cursos/editar/{id}(id=${curso.idCurso})}">Editar</a>
                 <a th:href="@{/cursos/excluir/{id}(id=${curso.idCurso})}">Excluir</a>
             </td>
         </tr>
-    </table>
-
+            </table>
+        </section>
+    </main>
 </body>
 
 </html>

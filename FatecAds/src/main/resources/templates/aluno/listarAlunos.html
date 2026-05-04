@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listagem de Alunos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
 
-<body>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/">Voltar para a pagina inicial</a>
 
-    <a href="/">Voltar para a página inicial</a>
+        <header class="page-header">
+            <div>
+                <h1>Listagem de Alunos</h1>
+                <p class="subtitle">Todos os registros ativos no sistema.</p>
+            </div>
+            <a class="primary-link" href="/alunos/criar">Criar Novo Aluno</a>
+        </header>
 
-    <h1 style="text-align: center;">Listagem de Alunos</h1>
-    <h3 style="text-align: center;">
-        <a href="/alunos/criar">Criar Novo Aluno</a>
-    </h3>
-
-    <table align="center" border="1">
+        <section class="card">
+            <table class="data-table">
         <tr>
             <th>Nome</th>
             <th>Email</th>
@@ -24,6 +32,7 @@
             <th>Endereço</th>
             <th>CPF</th>
             <th>RA</th>
+            <th>Curso</th>
             <th colspan="2">Ações</th>
         </tr>
         <tr th:each="aluno : ${alunos}">
@@ -33,13 +42,15 @@
             <td th:text="${aluno.enderecoAluno}">*</td>
             <td th:text="${aluno.cpfAluno}">*</td>
             <td th:text="${aluno.raAluno}">*</td>
-            <td>
+            <td th:text="${aluno.curso.nomeCurso}">*</td>
+            <td class="action-links">
                 <a th:href="@{/alunos/editar/{id}(id=${aluno.idAluno})}">Editar</a>
                 <a th:href="@{/alunos/excluir/{id}(id=${aluno.idAluno})}">Excluir</a>
             </td>
         </tr>
-    </table>
-
+            </table>
+        </section>
+    </main>
 </body>
 
 </html>

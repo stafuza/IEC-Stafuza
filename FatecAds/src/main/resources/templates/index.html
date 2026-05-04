@@ -4,15 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema FatecADS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
-<body>
-    <h1 style="text-align: center;">Bem vindo ao Sistema FatecADS</h1>
-    <h3 style="text-align: center;"><a href="/alunos/listar">Gerenciar alunos</a></h3>
+<body class="page">
+    <main class="shell">
+        <header class="hero">
+            <h1>Bem vindo ao Sistema FatecADS</h1>
+            <p>Controle academico com uma interface viva, clara e pronta para acelerar o seu dia.</p>
+        </header>
 
-    <h3 style="text-align: center;"><a href="/cursos/listar">Gerenciar cursos</a></h3>
-
-    <h3 style="text-align: center;"><a href="/professores/listar">Gerenciar professores</a></h3>
-
-    <h3 style="text-align: center;"><a href="/disciplinas/listar">Gerenciar disciplinas</a></h3>
+        <section class="grid">
+            <a class="nav-card" href="/alunos/listar">
+                <span>Gestao</span>
+                <h3>Alunos</h3>
+                <p>Organize dados, contatos e matriculas.</p>
+            </a>
+            <a class="nav-card" href="/cursos/listar">
+                <span>Catalogo</span>
+                <h3>Cursos</h3>
+                <p>Estruture periodos, carga horaria e ofertas.</p>
+            </a>
+            <a class="nav-card" href="/professores/listar">
+                <span>Equipe</span>
+                <h3>Professores</h3>
+                <p>Tenha o quadro docente sempre atualizado.</p>
+            </a>
+            <a class="nav-card" href="/disciplinas/listar">
+                <span>Rotas</span>
+                <h3>Disciplinas</h3>
+                <p>Conecte curso e docente em um fluxo unico.</p>
+            </a>
+        </section>
+    </main>
 </body>
 </html>
