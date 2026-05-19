@@ -10,7 +10,7 @@
     },
     {
         "type": "java",
-        "name": "Run FatecadsApplication (Maven Project)",
+        "name": "FatecadsApplication",
         "request": "launch",
         "mainClass": "br.com.fatecads.fatecads.FatecadsApplication",
         "projectName": "fatecads",
