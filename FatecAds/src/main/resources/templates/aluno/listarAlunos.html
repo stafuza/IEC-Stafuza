@@ -13,7 +13,7 @@
 
 <body class="page">
     <main class="shell">
-        <a class="back-link" href="/">Voltar para a pagina inicial</a>
+        <a class="back-link" href="/home">Voltar para a pagina inicial</a>
 
         <header class="page-header">
             <div>
@@ -42,7 +42,7 @@
             <td th:text="${aluno.enderecoAluno}">*</td>
             <td th:text="${aluno.cpfAluno}">*</td>
             <td th:text="${aluno.raAluno}">*</td>
-            <td th:text="${aluno.curso.nomeCurso}">*</td>
+            <td th:text="${aluno.curso != null ? aluno.curso.nomeCurso : 'Sem curso'}">*</td>
             <td class="action-links">
                 <a th:href="@{/alunos/editar/{id}(id=${aluno.idAluno})}">Editar</a>
                 <a th:href="@{/alunos/excluir/{id}(id=${aluno.idAluno})}">Excluir</a>

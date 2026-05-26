@@ -39,4 +39,13 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmailUsuario(email).orElse(null);
+    }
+
+    public void updatePassword(Usuario usuario, String rawPassword) {
+        usuario.setSenhaUsuario(passwordEncoder.encode(rawPassword));
+        usuarioRepository.save(usuario);
+    }
+
 }

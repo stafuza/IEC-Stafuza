@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Usuarios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
+</head>
+
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/home">Voltar para a pagina inicial</a>
+
+        <header class="page-header">
+            <div>
+                <h1>Listagem de Usuarios</h1>
+                <p class="subtitle">Acompanhe acessos e permissões.</p>
+            </div>
+            <a class="primary-link" href="/usuarios/criar">Criar Novo Usuario</a>
+        </header>
+
+        <section class="card">
+            <table class="data-table">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Login</th>
+                    <th>Perfil</th>
+                    <th colspan="2">Acoes</th>
+                </tr>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.nomeUsuario}">*</td>
+                    <td th:text="${usuario.emailUsuario}">*</td>
+                    <td th:text="${usuario.loginUsuario}">*</td>
+                    <td th:text="${usuario.roleUsuario}">*</td>
+                    <td class="action-links">
+                        <a th:href="@{/usuarios/editar/{id}(id=${usuario.idUsuario})}">Editar</a>
+                        <a th:href="@{/usuarios/excluir/{id}(id=${usuario.idUsuario})}">Excluir</a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>
