@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
+</head>
+
+<body class="page">
+    <main class="shell auth-shell">
+        <section class="auth-card auth-single">
+            <div class="auth-copy">
+                <span class="eyebrow">Seguranca</span>
+                <h1>Redefina sua senha</h1>
+                <p>Escolha uma nova senha para voltar ao sistema com seguranca.</p>
+            </div>
+
+            <div class="auth-panel">
+                <h2>Nova senha</h2>
+                <p class="subtitle" th:if="${tokenValid}">Crie sua nova senha abaixo.</p>
+
+                <p class="form-hint error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+                <p class="form-hint success" th:if="${resetOk}">
+                    Senha atualizada com sucesso. <a class="ghost-link" href="/login">Fazer login</a>
+                </p>
+
+                <form class="form-grid" th:if="${tokenValid}" method="post" th:action="@{/redefinir-senha}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="hidden" name="token" th:value="${token}">
+
+                    <div class="field">
+                        <label for="senha">Nova senha</label>
+                        <input type="password" id="senha" name="senha" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirmacao">Confirmar senha</label>
+                        <input type="password" id="confirmacao" name="confirmacao" required>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn" type="submit">Atualizar senha</button>
+                        <a class="ghost-link" href="/login">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -19,6 +19,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/login",
+                                "/esqueci-senha",
+                                "/redefinir-senha",
                                 "/css/**",
                                 "/images/**")
                         .permitAll()
