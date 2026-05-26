@@ -4,17 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FatecAds - Sistema Acadêmico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
-<body>
-    <h1 style="text-align: center;">FatecAds</h1>
-    <h2 style="text-align: center;">Sistema Acadêmico</h2>
+<body class="page">
+    <main class="shell">
+        <header class="hero">
+            <h1>FatecADS</h1>
+            <p>Dashboard para cadastros, consultas e atualizacoes do sistema.</p>
+        </header>
 
-    <form action="/login" method="get">
-        <button type="submit">Acessar o Sistema</button>
-    </form>
-
-    <form action="/usuarios/criar" method="get">
-        <button type="submit">Criar Novo Usuário</button>
-    </form>
+        <section class="grid">
+            <div class="card">
+                <span class="subtitle">Usuarios</span>
+                <h3>Gestao de Acesso</h3>
+                <p class="subtitle">Crie novos logins e mantenha permissões em dia.</p>
+                <div class="actions">
+                    <a class="primary-link" href="/usuarios/criar">Cadastrar</a>
+                    <a class="back-link" href="/usuarios/listar">Visualizar</a>
+                </div>
+            </div>
+            <div class="card">
+                <span class="subtitle">Alunos</span>
+                <h3>Cadastro de Alunos</h3>
+                <p class="subtitle">Controle dados, matriculas e contatos.</p>
+                <div class="actions">
+                    <a class="primary-link" href="/alunos/criar">Cadastrar</a>
+                    <a class="back-link" href="/alunos/listar">Visualizar</a>
+                </div>
+            </div>
+            <div class="card">
+                <span class="subtitle">Cursos</span>
+                <h3>Catalogo de Cursos</h3>
+                <p class="subtitle">Defina periodos, carga horaria e oferta.</p>
+                <div class="actions">
+                    <a class="primary-link" href="/cursos/criar">Cadastrar</a>
+                    <a class="back-link" href="/cursos/listar">Visualizar</a>
+                </div>
+            </div>
+            <div class="card">
+                <span class="subtitle">Professores</span>
+                <h3>Equipe Docente</h3>
+                <p class="subtitle">Cadastre o quadro docente e especialidades.</p>
+                <div class="actions">
+                    <a class="primary-link" href="/professores/criar">Cadastrar</a>
+                    <a class="back-link" href="/professores/listar">Visualizar</a>
+                </div>
+            </div>
+            <div class="card">
+                <span class="subtitle">Disciplinas</span>
+                <h3>Malha Academica</h3>
+                <p class="subtitle">Conecte cursos e professores nas disciplinas.</p>
+                <div class="actions">
+                    <a class="primary-link" href="/disciplinas/criar">Cadastrar</a>
+                    <a class="back-link" href="/disciplinas/listar">Visualizar</a>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

@@ -122,6 +122,11 @@ body::after {
   gap: 18px;
 }
 
+.grid .card {
+  display: grid;
+  gap: 12px;
+}
+
 .nav-card {
   background: var(--card);
   border: 1px solid var(--stroke);
@@ -260,6 +265,11 @@ select:focus {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.actions .back-link {
+  padding: 10px 16px;
 }
 
 .btn {
@@ -298,8 +308,47 @@ select:focus {
     align-items: flex-start;
   }
 
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .nav-card,
+  .card {
+    border-radius: 18px;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+
+  .primary-link,
+  .back-link,
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
   .data-table {
     display: block;
     overflow-x: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .shell {
+    padding: 28px 16px 48px;
+  }
+
+  .hero p,
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .actions {
+    gap: 10px;
   }
 }
