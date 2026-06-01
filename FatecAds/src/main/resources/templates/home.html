@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,57 +10,149 @@
     <link rel="stylesheet" href="/css/orbit.css">
 </head>
 <body class="page">
-    <main class="shell">
-        <header class="hero">
-            <h1>FatecADS</h1>
-            <p>Dashboard para cadastros, consultas e atualizacoes do sistema.</p>
+    <main class="shell dashboard">
+        <header class="dashboard-header">
+            <div class="hero">
+                <span class="eyebrow">Painel principal</span>
+                <h1>Dashboard FatecADS</h1>
+                <p>Visao estrategica do sistema academico com acesso rapido a cadastros e consultas.</p>
+            </div>
+            <div class="toolbar">
+                <a class="primary-link" href="/usuarios/criar">Novo usuario</a>
+                <a class="back-link" href="/professores/criar">Novo professor</a>
+            </div>
         </header>
 
+        <section class="grid stats-grid">
+            <article class="stat-card">
+                <span class="stat-label">Usuarios cadastrados</span>
+                <h2 class="stat-value" th:text="${usuariosTotal}">0</h2>
+                <div class="stat-meta">
+                    <span class="pill">Total no banco</span>
+                    <span>perfis com acesso</span>
+                </div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Alunos cadastrados</span>
+                <h2 class="stat-value" th:text="${alunosTotal}">0</h2>
+                <div class="stat-meta">
+                    <span class="pill" th:text="${alunosSemCurso}">0</span>
+                    <span>sem curso associado</span>
+                </div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Cursos cadastrados</span>
+                <h2 class="stat-value" th:text="${cursosTotal}">0</h2>
+                <div class="stat-meta">
+                    <span class="pill">Total no banco</span>
+                    <span>ofertas disponiveis</span>
+                </div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Disciplinas</span>
+                <h2 class="stat-value" th:text="${disciplinasTotal}">0</h2>
+                <div class="stat-meta">
+                    <span class="pill" th:text="${disciplinasSemProfessor}">0</span>
+                    <span>sem professor definido</span>
+                </div>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Professores</span>
+                <h2 class="stat-value" th:text="${professoresTotal}">0</h2>
+                <div class="stat-meta">
+                    <span class="pill">Total no banco</span>
+                    <span>docentes cadastrados</span>
+                </div>
+            </article>
+        </section>
+
         <section class="grid">
-            <div class="card">
-                <span class="subtitle">Usuarios</span>
-                <h3>Gestao de Acesso</h3>
-                <p class="subtitle">Crie novos logins e mantenha permissões em dia.</p>
-                <div class="actions">
-                    <a class="primary-link" href="/usuarios/criar">Cadastrar</a>
-                    <a class="back-link" href="/usuarios/listar">Visualizar</a>
+            <a class="nav-card" href="/usuarios/listar">
+                <span>Usuarios</span>
+                <h3>Gestao de acesso</h3>
+                <p>Controle permissões, redefina senhas e monitore logins.</p>
+            </a>
+            <a class="nav-card" href="/alunos/listar">
+                <span>Alunos</span>
+                <h3>Cadastro de alunos</h3>
+                <p>Atualize dados, matriculas e contatos com rapidez.</p>
+            </a>
+            <a class="nav-card" href="/cursos/listar">
+                <span>Cursos</span>
+                <h3>Catalogo academico</h3>
+                <p>Defina periodos, carga horaria e turmas.</p>
+            </a>
+            <a class="nav-card" href="/professores/listar">
+                <span>Professores</span>
+                <h3>Equipe docente</h3>
+                <p>Organize especialidades e alocacoes.</p>
+            </a>
+            <a class="nav-card" href="/disciplinas/listar">
+                <span>Disciplinas</span>
+                <h3>Malha curricular</h3>
+                <p>Conecte disciplinas com cursos e professores.</p>
+            </a>
+        </section>
+
+        <section class="grid">
+            <div class="card list-card">
+                <div class="section-title">
+                    <h2>Ultimos alunos cadastrados</h2>
+                    <span class="pill">Mais recentes</span>
                 </div>
+                <div class="list-item" th:each="aluno : ${ultimosAlunos}">
+                    <div>
+                        <strong th:text="${aluno.nomeAluno}">Nome do aluno</strong>
+                        <span th:text="${aluno.curso != null ? aluno.curso.nomeCurso : 'Sem curso'}">Curso</span>
+                    </div>
+                    <span class="pill" th:text="${aluno.raAluno}">RA</span>
+                </div>
+                <p class="subtitle" th:if="${#lists.isEmpty(ultimosAlunos)}">Nenhum aluno cadastrado ainda.</p>
             </div>
-            <div class="card">
-                <span class="subtitle">Alunos</span>
-                <h3>Cadastro de Alunos</h3>
-                <p class="subtitle">Controle dados, matriculas e contatos.</p>
-                <div class="actions">
-                    <a class="primary-link" href="/alunos/criar">Cadastrar</a>
-                    <a class="back-link" href="/alunos/listar">Visualizar</a>
+            <div class="card list-card">
+                <div class="section-title">
+                    <h2>Ultimos professores cadastrados</h2>
+                    <span class="pill">Mais recentes</span>
                 </div>
+                <div class="list-item" th:each="professor : ${ultimosProfessores}">
+                    <div>
+                        <strong th:text="${professor.nomeProfessor}">Nome do professor</strong>
+                        <span th:text="${professor.graduacaoProfessor}">Formacao</span>
+                    </div>
+                    <span class="pill" th:text="${professor.rmProfessor}">RM</span>
+                </div>
+                <p class="subtitle" th:if="${#lists.isEmpty(ultimosProfessores)}">Nenhum professor cadastrado ainda.</p>
             </div>
-            <div class="card">
-                <span class="subtitle">Cursos</span>
-                <h3>Catalogo de Cursos</h3>
-                <p class="subtitle">Defina periodos, carga horaria e oferta.</p>
-                <div class="actions">
-                    <a class="primary-link" href="/cursos/criar">Cadastrar</a>
-                    <a class="back-link" href="/cursos/listar">Visualizar</a>
+        </section>
+
+        <section class="grid">
+            <div class="card list-card">
+                <div class="section-title">
+                    <h2>Ultimas disciplinas cadastradas</h2>
+                    <span class="pill">Mais recentes</span>
                 </div>
+                <div class="list-item" th:each="disciplina : ${ultimasDisciplinas}">
+                    <div>
+                        <strong th:text="${disciplina.nomeDisciplina}">Nome da disciplina</strong>
+                        <span th:text="${disciplina.curso != null ? disciplina.curso.nomeCurso : 'Sem curso'}">Curso</span>
+                    </div>
+                    <span class="pill" th:text="${disciplina.professor != null ? disciplina.professor.nomeProfessor : 'Sem professor'}">Professor</span>
+                </div>
+                <p class="subtitle" th:if="${#lists.isEmpty(ultimasDisciplinas)}">Nenhuma disciplina cadastrada ainda.</p>
             </div>
-            <div class="card">
-                <span class="subtitle">Professores</span>
-                <h3>Equipe Docente</h3>
-                <p class="subtitle">Cadastre o quadro docente e especialidades.</p>
-                <div class="actions">
-                    <a class="primary-link" href="/professores/criar">Cadastrar</a>
-                    <a class="back-link" href="/professores/listar">Visualizar</a>
+            <div class="card list-card">
+                <div class="section-title">
+                    <h2>Ultimos usuarios cadastrados</h2>
+                    <span class="pill">Mais recentes</span>
                 </div>
-            </div>
-            <div class="card">
-                <span class="subtitle">Disciplinas</span>
-                <h3>Malha Academica</h3>
-                <p class="subtitle">Conecte cursos e professores nas disciplinas.</p>
-                <div class="actions">
-                    <a class="primary-link" href="/disciplinas/criar">Cadastrar</a>
-                    <a class="back-link" href="/disciplinas/listar">Visualizar</a>
+                <div class="list-item" th:each="usuario : ${ultimosUsuarios}">
+                    <div>
+                        <strong th:text="${usuario.nomeUsuario}">Nome do usuario</strong>
+                        <span th:text="${usuario.emailUsuario}">Email</span>
+                    </div>
+                    <span class="pill" th:text="${usuario.roleUsuario}">Perfil</span>
                 </div>
+                <p class="subtitle" th:if="${#lists.isEmpty(ultimosUsuarios)}">Nenhum usuario cadastrado ainda.</p>
             </div>
         </section>
     </main>
