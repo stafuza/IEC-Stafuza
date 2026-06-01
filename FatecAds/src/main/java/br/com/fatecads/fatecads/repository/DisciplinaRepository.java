@@ -1,11 +1,13 @@
 package br.com.fatecads.fatecads.repository;
 
 import br.com.fatecads.fatecads.entity.Disciplina;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisciplinaRepository extends JpaRepository<Disciplina, Integer> {
-    
+	List<Disciplina> findTop5ByOrderByIdDisciplinaDesc();
+
+	long countByProfessorIsNull();
 }
