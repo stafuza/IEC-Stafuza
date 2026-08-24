@@ -24,14 +24,14 @@
                 <td th:text="${produto.unidadeProduto}"></td>
                 <td th:text="${produto.marcaProduto}"></td>
                 <td>
-                    <a th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a>
-                    <a th:href="@{/produtos/excluir/{id}(id=${produto.id})}">Excluir</a>
+                    <a th:href="@{/produtos/editar/{id}(id=${produto.idProduto})}">Editar</a>
+                    <a th:href="@{/produtos/excluir/{id}(id=${produto.idProduto})}">Excluir</a>
                 </td>
             </tr>
         </tbody>
     </table>
     <h2 style="text-align: center;">
-        <a th:href="@(/produtos/novo)">Cadastrar Novo Produto</a>
+        <a th:href="@{/produtos/criar}">Cadastrar Novo Produto</a>
     </h2>
 </body>
 </html>

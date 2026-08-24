@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.fatecads.fatecads.entity.Produto;
 import br.com.fatecads.fatecads.service.ProdutoService;
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("/produtos")
@@ -27,14 +27,14 @@ public class ProdutoController {
     public String listar(Model model) {
         List<Produto> produtos = produtoService.findAll();
         model.addAttribute("produtos", produtos);
-        return "produtos/listarProdutos";
+        return "produto/listarProdutos";
     }
 
     //MÉTODO PARA ABRIR O FORMULÁRIO DE CRIAÇÃO DE UM NOVO PRODUTO
     @GetMapping("/criar")
     public String criarForm(Model model) {
         model.addAttribute("produto", new Produto());
-        return "produtos/novoProduto";
+        return "produto/formularioProduto";
     }
     //MÉTODO PARA SALVAR UM NOVO PRODUTO
     @PostMapping("/salvar")
@@ -48,7 +48,7 @@ public class ProdutoController {
     public String editarForm(@PathVariable Integer id, Model model) {
         Produto produto = produtoService.findById(id);
         model.addAttribute("produto", produto);
-        return "produtos/formulario";
+        return "produto/formularioProduto";
     }
 
     //MÉTODO PARA EXCLUIR UM PRODUTO

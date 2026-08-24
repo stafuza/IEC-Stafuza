@@ -3,6 +3,7 @@ package br.com.fatecads.fatecads.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,9 @@ public class PedidoController {
     private ProdutoService produtoService;
 
     @PostMapping
-    @RequestMapping
-    public Pedido salvaPedido(@RequestBody Pedido pedido) {
-        return pedidoService.salvarPedido(pedido);
+    public ResponseEntity<Void> salvaPedido(@RequestBody Pedido pedido) {
+        pedidoService.salvarPedido(pedido);
+        return ResponseEntity.noContent().build();
     }
 
     //MÉTODO PARA ABRIR TELA DE CADASTRO DE PEDIDOS
