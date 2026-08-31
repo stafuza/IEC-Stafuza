@@ -1,116 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Pedidos</title>
+    <title>Novo Pedido | FatecADS</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/home">Voltar à Home</a>
 
-<body>
-    <h1 style="text-align: center;">Cadastro de Pedidos</h1>
-    <datalist id="listaAlunos">
-        <option th:each="aluno : ${alunos}" th:value="${aluno.idAluno + ' - ' + aluno.nomeAluno}">
-        </option>
-    </datalist>
+        <header class="page-header">
+            <div>
+                <span class="eyebrow">Pedidos</span>
+                <h1>Novo pedido</h1>
+                <p class="subtitle">Selecione o aluno, adicione produtos e ajuste as quantidades antes de finalizar.</p>
+            </div>
+            <a class="back-link" href="/produtos/listar">Gerenciar produtos</a>
+        </header>
 
-    <datalist id="listaProdutos">
-        <option th:each="produto : ${produtos}" th:value="${produto.idProduto + ' - ' + produto.descricaoProduto}"
-            th:attr="data-preco=${produto.valorProduto}">
-        </option>
-    </datalist>
+        <datalist id="listaAlunos">
+            <option th:each="aluno : ${alunos}" th:value="${aluno.idAluno + ' - ' + aluno.nomeAluno}"></option>
+        </datalist>
+        <datalist id="listaProdutos">
+            <option th:each="produto : ${produtos}"
+                th:value="${produto.idProduto + ' - ' + produto.descricaoProduto}"
+                th:attr="data-preco=${produto.valorProduto},data-imagem=${produto.imagemProduto != null ? '/produtos/' + produto.idProduto + '/imagem' : ''}"></option>
+        </datalist>
 
-    <h1>Cadastro de Pedidos</h1>
-    <a href="@(/home)">Voltar</a>
+        <section class="card">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="aluno">Aluno</label>
+                    <input list="listaAlunos" type="text" id="aluno" placeholder="Busque por código ou nome do aluno" autocomplete="off">
+                </div>
+            </div>
+        </section>
 
-    <p>I. Identificação do Aluno</p>
-    <label for="aluno">Aluno:</label>
-    <br />
-    <input list="listaAlunos" type="text" id="aluno" placeholder="Digite o nome oucódigo do aluno">
-    <br />br/>
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <span class="eyebrow">Itens</span>
+                    <h2>Adicionar produto</h2>
+                </div>
+                <span class="pill" id="contador-itens">0 itens</span>
+            </div>
 
-    <p>II. Adicionar produto ao pedido</p>
-    <label for="produto">Produto:</label>
-    <input list="listaProdutos" type="text" id="produto" placeholder="Digite o nome ou código do produto">
-    <br /><br />
-    
-    <label for="quantidade">Quantidade:</label>
-    <input type="number" id="quantidade" placeholder="0" min="1">
-    <br />
+            <div class="form-grid" style="margin-top: 20px;">
+                <div class="field">
+                    <label for="produto">Produto</label>
+                    <input list="listaProdutos" type="text" id="produto" placeholder="Busque por código ou produto" autocomplete="off">
+                    <div id="foto-produto-selecionado" class="selected-product" hidden>
+                        <img id="imagem-produto-selecionado" alt="Foto do produto selecionado">
+                        <div>
+                            <strong id="nome-produto-selecionado"></strong>
+                            <span class="subtitle">Produto selecionado</span>
+                        </div>
+                    </div>
+                </div>
 
-    <p
-    <button type="button" onclick="adicionarItem()">
-        <span>+ </span> Adicionar
-    </button>
+                <div class="field">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" id="quantidade" placeholder="1" min="1" step="1" value="1">
+                </div>
 
-    <!-- Tabela de Itens do Pedido -->
-    <table>
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Preço Unitário</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody id="tabela-itens">
-            <tr id="empty-row">
-                <td colspan="5">Nenhum item adicionado ao pedido</td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <span id="total-pedido">Total do Pedido</span>
-    <span>R$ </span><span id="totalPedido">0,00</span>
-    <br /><br />
-    <button onclick="salvarPedido()">Finalizar Pedido</button>
+                <div class="actions">
+                    <button class="btn" type="button" onclick="adicionarItem()">Adicionar ao pedido</button>
+                </div>
+            </div>
+        </section>
 
+        <section class="card">
+            <div class="section-title">
+                <div>
+                    <span class="eyebrow">Resumo</span>
+                    <h2>Itens do pedido</h2>
+                </div>
+            </div>
+
+            <div class="table-wrap" style="margin-top: 20px;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço unitário</th>
+                            <th>Subtotal</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-itens">
+                        <tr id="empty-row">
+                            <td colspan="6">Nenhum produto adicionado ao pedido.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="order-summary" style="margin-top: 22px;">
+                <span>Total do pedido</span>
+                <strong>R$ <span id="totalPedido">0,00</span></strong>
+            </div>
+
+            <div class="actions" style="margin-top: 22px;">
+                <button class="btn" type="button" onclick="salvarPedido()">Finalizar pedido</button>
+                <a class="back-link" href="/home">Cancelar</a>
+            </div>
+        </section>
+    </main>
 
     <script>
-        let itens = [];
+        const itens = [];
+
+        function moeda(valor) {
+            return valor.toFixed(2).replace('.', ',');
+        }
+
+        function buscarOpcaoProduto() {
+            const valor = document.getElementById('produto').value;
+            return Array.from(document.querySelectorAll('#listaProdutos option'))
+                .find(option => option.value === valor);
+        }
+
+        function exibirImagemProdutoSelecionado() {
+            const opcao = buscarOpcaoProduto();
+            const preview = document.getElementById('foto-produto-selecionado');
+
+            if (!opcao || !opcao.dataset.imagem) {
+                preview.hidden = true;
+                return;
+            }
+
+            document.getElementById('imagem-produto-selecionado').src = opcao.dataset.imagem;
+            document.getElementById('nome-produto-selecionado').textContent = opcao.value.split(' - ').slice(1).join(' - ');
+            preview.hidden = false;
+        }
+
+        document.getElementById('produto').addEventListener('input', exibirImagemProdutoSelecionado);
 
         function adicionarItem() {
-            let produtoInput = document.getElementById("produto").value;
-            let quantidade = document.getElementById("quantidade").value;
+            const opcao = buscarOpcaoProduto();
+            const quantidade = Number(document.getElementById('quantidade').value);
 
-            if (!produtoInput || quantidade <= 0) {
-                alert("Preencha corretamente o produto e a quantidade!");
+            if (!opcao) {
+                alert('Selecione um produto da lista.');
+                return;
+            }
+            if (!Number.isInteger(quantidade) || quantidade < 1) {
+                alert('Informe uma quantidade inteira maior que zero.');
                 return;
             }
 
-            let partes = produtoInput.split(" - ");
-            let produtoId = partes[0];
-            let produtoNome = partes[1];
-
-            let options = document.querySelectorAll("#listaProdutos option");
-            let preco = null;
-
-            options.forEach(opt => {
-                if (opt.value === produtoInput) {
-                    preco = opt.getAttribute("data-preco");
-                }
-            });
-
-            if (!preco) {
-                alert("Produto inválido! Selecione um produto da lista.");
-                return;
-            }
-
-            let subtotal = quantidade * preco;
-
+            const partes = opcao.value.split(' - ');
+            const preco = Number(opcao.dataset.preco);
             itens.push({
-                produto: { idProduto: produtoId },
-                nomeProduto: produtoNome,
-                quantidade: parseInt(quantidade),
-                preco: parseFloat(preco),
-                subtotal: subtotal
+                produto: { idProduto: Number(partes[0]) },
+                nomeProduto: partes.slice(1).join(' - '),
+                quantidade,
+                preco,
+                subtotal: quantidade * preco,
+                imagemProduto: opcao.dataset.imagem || ''
             });
 
-            document.getElementById("produto").value = "";
-            document.getElementById("quantidade").value = "";
+            document.getElementById('produto').value = '';
+            document.getElementById('quantidade').value = '1';
+            document.getElementById('foto-produto-selecionado').hidden = true;
+            renderTabela();
+        }
 
+        function atualizarQuantidade(index, novaQuantidade) {
+            const quantidade = Number(novaQuantidade);
+            if (!Number.isInteger(quantidade) || quantidade < 1) {
+                alert('Informe uma quantidade inteira maior que zero.');
+                renderTabela();
+                return;
+            }
+            itens[index].quantidade = quantidade;
+            itens[index].subtotal = quantidade * itens[index].preco;
             renderTabela();
         }
 
@@ -120,79 +192,64 @@
         }
 
         function renderTabela() {
-            let tabela = document.getElementById("tabela-itens");
-            let emptyRow = document.getElementById("empty-row");
-
-            tabela.innerHTML = "";
+            const tabela = document.getElementById('tabela-itens');
+            const total = itens.reduce((soma, item) => soma + item.subtotal, 0);
+            document.getElementById('totalPedido').textContent = moeda(total);
+            document.getElementById('contador-itens').textContent = `${itens.length} ${itens.length === 1 ? 'item' : 'itens'}`;
 
             if (itens.length === 0) {
-                tabela.innerHTML = `<tr class="empty-row" id="empty-row"><td colspan="5">Nenhum produto adicionado ao pedido.</td></tr>`;
-                document.getElementById("totalPedido").innerText = "0,00";
+                tabela.innerHTML = '<tr><td colspan="6">Nenhum produto adicionado ao pedido.</td></tr>';
                 return;
             }
 
-            let total = 0;
-
-            itens.forEach((item, index) => {
-                total += item.subtotal;
-                tabela.innerHTML += `
-<tr>
-<td>${item.nomeProduto}</td>
-<td>${item.quantidade}</td>
-<td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
-<td>R$ ${item.subtotal.toFixed(2).replace('.', ',')}</td>
-<td><button class="btn-remove" onclick="removerItem(${index})">Remover</button></td>
-</tr>
-                `;
-            });
-
-            document.getElementById("totalPedido").innerText = total.toFixed(2).replace('.', ',');
+            tabela.innerHTML = itens.map((item, index) => `
+                <tr>
+                    <td>${item.imagemProduto ? `<img class="product-image" src="${item.imagemProduto}" alt="Foto de ${item.nomeProduto}">` : '<span class="image-placeholder">Sem foto</span>'}</td>
+                    <td>${item.nomeProduto}</td>
+                    <td><input type="number" min="1" step="1" value="${item.quantidade}" aria-label="Quantidade de ${item.nomeProduto}" onchange="atualizarQuantidade(${index}, this.value)"></td>
+                    <td>R$ ${moeda(item.preco)}</td>
+                    <td>R$ ${moeda(item.subtotal)}</td>
+                    <td><button class="btn-remove" type="button" onclick="removerItem(${index})">Remover</button></td>
+                </tr>`).join('');
         }
 
-        function salvarPedido() {
-            let alunoInput = document.getElementById("aluno").value;
+        async function salvarPedido() {
+            const alunoInput = document.getElementById('aluno').value;
+            const alunoValido = Array.from(document.querySelectorAll('#listaAlunos option'))
+                .find(option => option.value === alunoInput);
 
-            if (!alunoInput) {
-                alert("Selecione um aluno antes de salvar!");
+            if (!alunoValido) {
+                alert('Selecione um aluno da lista antes de finalizar.');
                 return;
             }
-
             if (itens.length === 0) {
-                alert("Adicione ao menos um produto ao pedido!");
+                alert('Adicione ao menos um produto ao pedido.');
                 return;
             }
 
-            let alunoId = alunoInput.split(" - ")[0];
-
-            let pedido = {
-                aluno: { idAluno: alunoId },
-                itens: itens
+            const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+            const pedido = {
+                aluno: { idAluno: Number(alunoInput.split(' - ')[0]) },
+                itens
             };
 
-            let csrfToken = document.querySelector('meta[name="_csrf"]').content;
-            let csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
-
-            fetch("/pedidos", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    [csrfHeader]: csrfToken
-                },
-                body: JSON.stringify(pedido)
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        throw new Error(`HTTP ${res.status}`);
-                    }
-                    alert("Pedido salvo com sucesso!");
-                    location.reload();
-                })
-                .catch(err => {
-                    alert("Erro ao salvar o pedido. Tente novamente.");
-                    console.error(err);
+            try {
+                const resposta = await fetch('/pedidos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', [csrfHeader]: csrfToken },
+                    body: JSON.stringify(pedido)
                 });
+                if (!resposta.ok) {
+                    throw new Error((await resposta.text()) || `HTTP ${resposta.status}`);
+                }
+                alert('Pedido salvo com sucesso!');
+                window.location.reload();
+            } catch (erro) {
+                console.error(erro);
+                alert(`Não foi possível salvar o pedido: ${erro.message}`);
+            }
         }
     </script>
 </body>
-
 </html>

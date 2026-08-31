@@ -1,37 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <title>Produtos | FatecADS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/orbit.css">
 </head>
-<body>
-    <h1 style="text-align: center;">Lista de Produtos</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Unidade</th>
-                <th>Marca</th>
-                <th colspan="2">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="produto : ${produtos}">
-                <td th:text="${produto.descricaoProduto}"></td>
-                <td th:text="${produto.valorProduto}"></td>
-                <td th:text="${produto.unidadeProduto}"></td>
-                <td th:text="${produto.marcaProduto}"></td>
-                <td>
-                    <a th:href="@{/produtos/editar/{id}(id=${produto.idProduto})}">Editar</a>
-                    <a th:href="@{/produtos/excluir/{id}(id=${produto.idProduto})}">Excluir</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <h2 style="text-align: center;">
-        <a th:href="@{/produtos/criar}">Cadastrar Novo Produto</a>
-    </h2>
+<body class="page">
+    <main class="shell">
+        <a class="back-link" href="/home">Voltar à Home</a>
+
+        <header class="page-header">
+            <div>
+                <span class="eyebrow">Catálogo</span>
+                <h1>Produtos</h1>
+                <p class="subtitle">Consulte, atualize e mantenha o catálogo disponível para pedidos.</p>
+            </div>
+            <a class="primary-link" href="/produtos/criar">Cadastrar produto</a>
+        </header>
+
+        <section class="card">
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Unidade</th>
+                            <th>Marca</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produto : ${produtos}">
+                            <td>
+                                <img class="product-image" th:if="${produto.imagemProduto != null}"
+                                    th:src="@{/produtos/{id}/imagem(id=${produto.idProduto})}"
+                                    th:alt="${'Foto de ' + produto.descricaoProduto}">
+                                <span class="image-placeholder" th:unless="${produto.imagemProduto != null}">Sem foto</span>
+                            </td>
+                            <td th:text="${produto.descricaoProduto}">Produto</td>
+                            <td th:text="${#numbers.formatDecimal(produto.valorProduto, 1, 2)}">0,00</td>
+                            <td th:text="${produto.unidadeProduto}">Unidade</td>
+                            <td th:text="${produto.marcaProduto}">Marca</td>
+                            <td class="action-links">
+                                <a th:href="@{/produtos/editar/{id}(id=${produto.idProduto})}">Editar</a>
+                                <a th:href="@{/produtos/excluir/{id}(id=${produto.idProduto})}" onclick="return confirm('Excluir este produto?');">Excluir</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(produtos)}">
+                            <td colspan="6">Nenhum produto cadastrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
